@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #080f1a;
+    color: #e2e8f0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #102a43;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #0a95ff;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #38aaff;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-dark-900 border border-dark-700 rounded-xl p-5 shadow-lg;
+  }
+
+  .card-glow {
+    @apply card border-cyber-700 shadow-cyber-900/40;
+    box-shadow: 0 0 24px rgba(10, 149, 255, 0.08);
+  }
+
+  .btn-primary {
+    @apply bg-cyber-600 hover:bg-cyber-500 text-white font-semibold px-5 py-2.5 rounded-lg 
+           transition-all duration-200 flex items-center gap-2 disabled:opacity-50 
+           disabled:cursor-not-allowed shadow-lg hover:shadow-cyber-600/30;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-800 hover:bg-dark-700 text-gray-200 font-medium px-5 py-2.5 rounded-lg 
+           transition-all duration-200 flex items-center gap-2 border border-dark-600;
+  }
+
+  .badge-critical {
+    @apply bg-red-900/60 text-red-300 border border-red-700 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-high {
+    @apply bg-orange-900/60 text-orange-300 border border-orange-700 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-medium {
+    @apply bg-yellow-900/60 text-yellow-300 border border-yellow-700 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-low {
+    @apply bg-green-900/60 text-green-300 border border-green-700 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .input-cyber {
+    @apply w-full bg-dark-800 border border-dark-600 text-gray-100 rounded-lg px-4 py-3
+           focus:outline-none focus:border-cyber-500 focus:ring-1 focus:ring-cyber-500
+           placeholder-gray-500 transition-colors font-mono text-sm;
+  }
+
+  .tag-pass {
+    @apply text-green-400 font-mono font-bold;
+  }
+
+  .tag-fail {
+    @apply text-red-400 font-mono font-bold;
+  }
+
+  .tag-none {
+    @apply text-gray-400 font-mono font-bold;
+  }
+
+  .section-title {
+    @apply text-xs font-bold uppercase tracking-widest text-cyber-400 mb-3;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.35s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Grid scan line overlay for SOC ambiance */
+.scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(10, 149, 255, 0.015) 3px,
+    rgba(10, 149, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
