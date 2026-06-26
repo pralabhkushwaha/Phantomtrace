@@ -2,12 +2,78 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Mail, Globe2, Link2, FileSearch, ShieldCheck, AlertTriangle,
-  ArrowRight, Activity, TrendingUp, Database,
+  ArrowRight, Activity, TrendingUp, Database, Plug, Flag,
+  Phone, Languages, FolderOpen, Search, Settings, CheckCircle2, Clock,
 } from 'lucide-react'
 import { getHistory } from '../api/client'
 import { RiskBadge, LoadingSpinner } from '../components/UI'
 
-const QUICK_LINKS = [
+const ROADMAP = [
+  {
+    icon: Plug,
+    label: 'External API Integrations',
+    status: 'planned',
+    color: 'text-cyber-400',
+    border: 'border-cyber-800',
+    bg: 'bg-cyber-900/30',
+    items: ['VirusTotal — URL, hash & domain reputation', 'WhoisXML / WHOIS — domain registration details', 'urlscan.io — live URL screenshot & analysis', 'Shodan — IP/port intelligence', 'AbuseIPDB — IP reputation check', 'Google Safe Browsing — URL blocklist', 'AlienVault OTX — threat intelligence feeds'],
+  },
+  {
+    icon: Flag,
+    label: 'Indian-Focused Scam Patterns',
+    status: 'planned',
+    color: 'text-orange-400',
+    border: 'border-orange-800',
+    bg: 'bg-orange-900/20',
+    items: ['OLX / Quickr scams', 'UPI fraud patterns (GPay, PhonePe, Paytm)', 'WhatsApp APK scam (Indian variants)', 'SIM swap fraud indicators', 'Digital arrest scams (UP Police priority)', 'Loan app harassment patterns', 'KYC expiry fraud (Indian bank formats)'],
+  },
+  {
+    icon: Phone,
+    label: 'Phone Number / UPI ID OSINT',
+    status: 'planned',
+    color: 'text-yellow-400',
+    border: 'border-yellow-800',
+    bg: 'bg-yellow-900/20',
+    items: ['UPI ID → linked account intelligence', 'Phone number OSINT (Truecaller-style spam lists)', 'WhatsApp number validation'],
+  },
+  {
+    icon: Languages,
+    label: 'Indian Language Support',
+    status: 'planned',
+    color: 'text-purple-400',
+    border: 'border-purple-800',
+    bg: 'bg-purple-900/20',
+    items: ['"आपका KYC एक्सपायर हो गया" — Hindi scam pattern detection', 'Hindi fraud email template analysis', 'Regional language phishing detection'],
+  },
+  {
+    icon: FolderOpen,
+    label: 'Case Management Enhancements',
+    status: 'in-progress',
+    color: 'text-green-400',
+    border: 'border-green-800',
+    bg: 'bg-green-900/20',
+    items: ['FIR number linking — tie every investigation to FIR', 'PDF court-admissible report generation', 'Chain of custody logging', 'Export to UP Police CCTNS format'],
+  },
+  {
+    icon: Search,
+    label: 'Advanced OSINT Modules',
+    status: 'planned',
+    color: 'text-pink-400',
+    border: 'border-pink-800',
+    bg: 'bg-pink-900/20',
+    items: ['Social Media OSINT — Facebook, Instagram, Twitter', 'Reverse image search — fake document / profile photo detection', 'IP Geolocation with Indian ISP data', 'Dark web monitoring — leaked Indian credentials'],
+  },
+  {
+    icon: Settings,
+    label: 'Technical Improvements',
+    status: 'planned',
+    color: 'text-gray-400',
+    border: 'border-dark-600',
+    bg: 'bg-dark-800/40',
+    items: ['Backend API upgrade (Node.js / Flask)', 'SQLite → PostgreSQL migration', 'Officer login with role-based access control', 'API rate limiting & audit logging', 'Multi-user case collaboration'],
+  },
+]
+
   { to: '/email',     icon: Mail,       label: 'Email Forensics',     desc: 'Upload .eml or paste raw headers' },
   { to: '/homograph', icon: Globe2,     label: 'Homograph Detector',  desc: 'Detect brand impersonation domains' },
   { to: '/url',       icon: Link2,      label: 'URL Intelligence',    desc: 'Analyze suspicious links' },
@@ -139,6 +205,42 @@ export default function Dashboard() {
             </table>
           </div>
         )}
+      </div>
+      {/* Platform Upgrade Roadmap */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="section-title mb-0">Platform Upgrade Roadmap</h2>
+          <span className="text-[10px] font-mono text-dark-400 uppercase tracking-widest">UP Police Cyber Cell · Planned Enhancements</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {ROADMAP.map(({ icon: Icon, label, status, color, border, bg, items }) => (
+            <div key={label} className={`card border ${border} ${bg} flex flex-col gap-3`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Icon className={`w-4 h-4 ${color}`} />
+                  <span className={`text-sm font-semibold ${color}`}>{label}</span>
+                </div>
+                {status === 'in-progress' ? (
+                  <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-green-400 bg-green-900/40 border border-green-800 px-1.5 py-0.5 rounded">
+                    <Clock className="w-2.5 h-2.5" /> In Progress
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-dark-400 bg-dark-800 border border-dark-600 px-1.5 py-0.5 rounded">
+                    <CheckCircle2 className="w-2.5 h-2.5" /> Planned
+                  </span>
+                )}
+              </div>
+              <ul className="space-y-1.5">
+                {items.map(item => (
+                  <li key={item} className="flex items-start gap-2 text-xs text-gray-400">
+                    <span className={`mt-1 w-1 h-1 rounded-full shrink-0 ${color.replace('text-', 'bg-')}`} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

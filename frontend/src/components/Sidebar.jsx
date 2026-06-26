@@ -14,7 +14,7 @@ const NAV_GROUPS = [
       { to: '/homograph', icon: Globe2,          label: 'Homograph Detector' },
       { to: '/url',       icon: Link2,           label: 'URL Intelligence' },
       { to: '/fraud',     icon: FileSearch,      label: 'Fraud Detection' },
-      { to: '/malware',   icon: Bug,             label: 'Malware Detection', badge: 'NEW', accent: 'red' },
+      { to: '/malware',   icon: Bug,             label: 'Malware Detection' },
     ],
   },
   {
