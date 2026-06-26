@@ -137,3 +137,24 @@ export async function linkInvestigation(caseId, investigationId) {
   const { data } = await api.post(`/api/cases/${caseId}/link/${investigationId}`)
   return data
 }
+
+// ── IP Intelligence ───────────────────────────────────────────────────────
+
+export async function analyzeIP(ip) {
+  const { data } = await api.post('/api/ip/analyze', { ip })
+  return data
+}
+
+// ── Social OSINT ──────────────────────────────────────────────────────────
+
+export async function socialLookup(username) {
+  const { data } = await api.post('/api/social/lookup', { username })
+  return data
+}
+
+// ── Indian Scam Scanner ───────────────────────────────────────────────────
+
+export async function analyzeIndianScam(text, subject = '') {
+  const { data } = await api.post('/api/content/analyze', { text, subject })
+  return data
+}

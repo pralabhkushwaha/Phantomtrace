@@ -3,6 +3,7 @@ import { clsx } from 'clsx'
 import {
   LayoutDashboard, Mail, Globe2, Link2, FileSearch,
   ShieldCheck, Activity, Cpu, ChevronRight, Bug, Phone, Folder,
+  Flag, Globe, Users,
 } from 'lucide-react'
 
 const NAV_GROUPS = [
@@ -20,15 +21,18 @@ const NAV_GROUPS = [
   {
     label: 'India OSINT',
     items: [
-      { to: '/phone',     icon: Phone,           label: 'Phone & UPI OSINT', badge: 'NEW' },
+      { to: '/phone',        icon: Phone,  label: 'Phone & UPI OSINT',    badge: 'NEW' },
+      { to: '/indian-scams', icon: Flag,   label: 'Indian Scam Scanner',  badge: 'NEW' },
+      { to: '/ip-intel',     icon: Globe,  label: 'IP Intelligence',       badge: 'NEW' },
+      { to: '/social-osint', icon: Users,  label: 'Social Media OSINT',    badge: 'NEW' },
     ],
   },
   {
     label: 'Case Management',
     items: [
-      { to: '/cases',     icon: Folder,          label: 'Cases & FIR Tracking', badge: 'NEW' },
-      { to: '/risk',      icon: ShieldCheck,     label: 'Risk Assessment' },
-      { to: '/history',   icon: Activity,        label: 'History' },
+      { to: '/cases',   icon: Folder,      label: 'Cases & FIR Tracking', badge: 'NEW' },
+      { to: '/risk',    icon: ShieldCheck, label: 'Risk Assessment' },
+      { to: '/history', icon: Activity,    label: 'History' },
     ],
   },
 ]
@@ -64,31 +68,27 @@ export default function Sidebar({ open, setOpen }) {
                 {group.label}
               </p>
               <div className="space-y-0.5">
-                {group.items.map(({ to, icon: Icon, label, badge, accent }) => (
+                {group.items.map(({ to, icon: Icon, label, badge }) => (
                   <NavLink key={to} to={to} end={to === '/'} onClick={() => setOpen(false)}
                     className={({ isActive }) => clsx(
                       'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group',
                       isActive
-                        ? accent === 'red'
-                          ? 'bg-red-900/40 text-red-300 border border-red-800'
-                          : 'bg-cyber-900/50 text-cyber-300 border border-cyber-800'
+                        ? 'bg-cyber-900/50 text-cyber-300 border border-cyber-800'
                         : 'text-gray-400 hover:bg-dark-800 hover:text-gray-200 border border-transparent',
                     )}
                   >
                     {({ isActive }) => (
                       <>
                         <Icon className={clsx('w-4 h-4 shrink-0',
-                          isActive ? (accent === 'red' ? 'text-red-400' : 'text-cyber-400') : 'text-gray-500 group-hover:text-gray-400'
+                          isActive ? 'text-cyber-400' : 'text-gray-500 group-hover:text-gray-400'
                         )} />
                         <span className="flex-1">{label}</span>
                         {badge && !isActive && (
-                          <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold border ${
-                            accent === 'red'
-                              ? 'bg-red-900/50 text-red-400 border-red-800'
-                              : 'bg-cyber-900/50 text-cyber-400 border-cyber-800'
-                          }`}>{badge}</span>
+                          <span className="text-[9px] px-1.5 py-0.5 rounded font-bold border bg-cyber-900/50 text-cyber-400 border-cyber-800">
+                            {badge}
+                          </span>
                         )}
-                        {isActive && <ChevronRight className={`w-3 h-3 shrink-0 ${accent === 'red' ? 'text-red-500' : 'text-cyber-500'}`} />}
+                        {isActive && <ChevronRight className="w-3 h-3 shrink-0 text-cyber-500" />}
                       </>
                     )}
                   </NavLink>

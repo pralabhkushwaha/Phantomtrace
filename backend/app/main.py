@@ -9,6 +9,8 @@ from .routers.other_routes import url_router, content_router, history_router
 from .routers.malware_routes import router as malware_router
 from .routers.case_routes import router as case_router
 from .routers.osint_routes import router as osint_router
+from .routers.ip_intel_routes import router as ip_router
+from .routers.social_osint_routes import router as social_router
 
 app = FastAPI(
     title="PhantomTrace",
@@ -36,6 +38,8 @@ app.include_router(history_router)
 app.include_router(malware_router)
 app.include_router(case_router)
 app.include_router(osint_router)
+app.include_router(ip_router)
+app.include_router(social_router)
 
 @app.get("/")
 def root():
@@ -47,7 +51,8 @@ def root():
         "modules": [
             "email_forensics", "homograph_detection", "url_intelligence",
             "content_fraud_detection", "malware_detection", "case_management",
-            "phone_upi_osint"
+            "phone_upi_osint", "indian_scam_scanner", "ip_intelligence",
+            "social_osint"
         ]
     }
 
