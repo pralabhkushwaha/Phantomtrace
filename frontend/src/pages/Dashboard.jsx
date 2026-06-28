@@ -8,6 +8,13 @@ import {
 import { getHistory } from '../api/client'
 import { RiskBadge, LoadingSpinner } from '../components/UI'
 
+const QUICK_LINKS = [
+  { to: '/email',     icon: Mail,       label: 'Email Forensics',    desc: 'Upload .eml or paste raw headers' },
+  { to: '/homograph', icon: Globe2,     label: 'Homograph Detector', desc: 'Detect brand impersonation domains' },
+  { to: '/url',       icon: Link2,      label: 'URL Intelligence',   desc: 'Analyze suspicious links' },
+  { to: '/fraud',     icon: FileSearch, label: 'Fraud Detection',    desc: 'Scan email body for scam patterns' },
+]
+
 const ROADMAP = [
   {
     icon: Plug,
@@ -16,7 +23,15 @@ const ROADMAP = [
     color: 'text-cyber-400',
     border: 'border-cyber-800',
     bg: 'bg-cyber-900/30',
-    items: ['VirusTotal — URL, hash & domain reputation', 'WhoisXML / WHOIS — domain registration details', 'urlscan.io — live URL screenshot & analysis', 'Shodan — IP/port intelligence', 'AbuseIPDB — IP reputation check', 'Google Safe Browsing — URL blocklist', 'AlienVault OTX — threat intelligence feeds'],
+    items: [
+      'VirusTotal — URL, hash & domain reputation',
+      'WhoisXML / WHOIS — domain registration details',
+      'urlscan.io — live URL screenshot & analysis',
+      'Shodan — IP/port intelligence',
+      'AbuseIPDB — IP reputation check',
+      'Google Safe Browsing — URL blocklist',
+      'AlienVault OTX — threat intelligence feeds',
+    ],
   },
   {
     icon: Flag,
@@ -25,7 +40,15 @@ const ROADMAP = [
     color: 'text-orange-400',
     border: 'border-orange-800',
     bg: 'bg-orange-900/20',
-    items: ['OLX / Quickr scams', 'UPI fraud patterns (GPay, PhonePe, Paytm)', 'WhatsApp APK scam (Indian variants)', 'SIM swap fraud indicators', 'Digital arrest scams (UP Police priority)', 'Loan app harassment patterns', 'KYC expiry fraud (Indian bank formats)'],
+    items: [
+      'OLX / Quickr scams',
+      'UPI fraud patterns (GPay, PhonePe, Paytm)',
+      'WhatsApp APK scam (Indian variants)',
+      'SIM swap fraud indicators',
+      'Digital arrest scams (UP Police priority)',
+      'Loan app harassment patterns',
+      'KYC expiry fraud (Indian bank formats)',
+    ],
   },
   {
     icon: Phone,
@@ -34,7 +57,11 @@ const ROADMAP = [
     color: 'text-yellow-400',
     border: 'border-yellow-800',
     bg: 'bg-yellow-900/20',
-    items: ['UPI ID → linked account intelligence', 'Phone number OSINT (Truecaller-style spam lists)', 'WhatsApp number validation'],
+    items: [
+      'UPI ID linked account intelligence',
+      'Phone number OSINT (Truecaller-style spam lists)',
+      'WhatsApp number validation',
+    ],
   },
   {
     icon: Languages,
@@ -43,7 +70,11 @@ const ROADMAP = [
     color: 'text-purple-400',
     border: 'border-purple-800',
     bg: 'bg-purple-900/20',
-    items: ['"आपका KYC एक्सपायर हो गया" — Hindi scam pattern detection', 'Hindi fraud email template analysis', 'Regional language phishing detection'],
+    items: [
+      'Hindi scam pattern detection',
+      'Hindi fraud email template analysis',
+      'Regional language phishing detection',
+    ],
   },
   {
     icon: FolderOpen,
@@ -52,7 +83,12 @@ const ROADMAP = [
     color: 'text-green-400',
     border: 'border-green-800',
     bg: 'bg-green-900/20',
-    items: ['FIR number linking — tie every investigation to FIR', 'PDF court-admissible report generation', 'Chain of custody logging', 'Export to UP Police CCTNS format'],
+    items: [
+      'FIR number linking — tie every investigation to FIR',
+      'PDF court-admissible report generation',
+      'Chain of custody logging',
+      'Export to UP Police CCTNS format',
+    ],
   },
   {
     icon: Search,
@@ -61,7 +97,12 @@ const ROADMAP = [
     color: 'text-pink-400',
     border: 'border-pink-800',
     bg: 'bg-pink-900/20',
-    items: ['Social Media OSINT — Facebook, Instagram, Twitter', 'Reverse image search — fake document / profile photo detection', 'IP Geolocation with Indian ISP data', 'Dark web monitoring — leaked Indian credentials'],
+    items: [
+      'Social Media OSINT — Facebook, Instagram, Twitter',
+      'Reverse image search — fake document / profile photo detection',
+      'IP Geolocation with Indian ISP data',
+      'Dark web monitoring — leaked Indian credentials',
+    ],
   },
   {
     icon: Settings,
@@ -70,14 +111,21 @@ const ROADMAP = [
     color: 'text-gray-400',
     border: 'border-dark-600',
     bg: 'bg-dark-800/40',
-    items: ['Backend API upgrade (Node.js / Flask)', 'SQLite → PostgreSQL migration', 'Officer login with role-based access control', 'API rate limiting & audit logging', 'Multi-user case collaboration'],
+    items: [
+      'Backend API upgrade (Node.js / Flask)',
+      'SQLite to PostgreSQL migration',
+      'Officer login with role-based access control',
+      'API rate limiting and audit logging',
+      'Multi-user case collaboration',
+    ],
   },
 ]
 
-  { to: '/email',     icon: Mail,       label: 'Email Forensics',     desc: 'Upload .eml or paste raw headers' },
-  { to: '/homograph', icon: Globe2,     label: 'Homograph Detector',  desc: 'Detect brand impersonation domains' },
-  { to: '/url',       icon: Link2,      label: 'URL Intelligence',    desc: 'Analyze suspicious links' },
-  { to: '/fraud',     icon: FileSearch, label: 'Fraud Detection',     desc: 'Scan email body for scam patterns' },
+const STAT_CARDS = (stats) => [
+  { icon: Database,      label: 'Investigations', value: stats.total,              color: 'text-cyber-400' },
+  { icon: AlertTriangle, label: 'Critical',        value: stats.critical,           color: 'text-red-400' },
+  { icon: TrendingUp,    label: 'High Risk',        value: stats.high,               color: 'text-orange-400' },
+  { icon: Activity,      label: 'Avg Risk Score',   value: `${stats.avgScore}/100`,  color: 'text-yellow-400' },
 ]
 
 export default function Dashboard() {
@@ -85,13 +133,16 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getHistory(10).then(setHistory).catch(() => setHistory([])).finally(() => setLoading(false))
+    getHistory(10)
+      .then(setHistory)
+      .catch(() => setHistory([]))
+      .finally(() => setLoading(false))
   }, [])
 
   const stats = {
     total: history.length,
-    critical: history.filter(h => h.risk_level === 'Critical').length,
-    high: history.filter(h => h.risk_level === 'High').length,
+    critical: history.filter((h) => h.risk_level === 'Critical').length,
+    high: history.filter((h) => h.risk_level === 'High').length,
     avgScore: history.length
       ? Math.round(history.reduce((s, h) => s + h.risk_score, 0) / history.length)
       : 0,
@@ -99,24 +150,20 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
+
       {/* Page title */}
       <div>
         <h1 className="text-2xl font-bold text-white">
           PhantomTrace <span className="text-cyber-400">SOC Dashboard</span>
         </h1>
         <p className="text-sm text-gray-400 mt-1">
-          Phishing detection, email forensics &amp; fraud intelligence platform
+          Phishing detection, email forensics &amp; fraud intelligence platform — UP Police Cyber Cell
         </p>
       </div>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { icon: Database,     label: 'Investigations', value: stats.total,    color: 'text-cyber-400' },
-          { icon: AlertTriangle, label: 'Critical',       value: stats.critical, color: 'text-red-400' },
-          { icon: TrendingUp,   label: 'High Risk',       value: stats.high,     color: 'text-orange-400' },
-          { icon: Activity,     label: 'Avg Risk Score',  value: `${stats.avgScore}/100`, color: 'text-yellow-400' },
-        ].map(({ icon: Icon, label, value, color }) => (
+        {STAT_CARDS(stats).map(({ icon: Icon, label, value, color }) => (
           <div key={label} className="card hover:border-dark-600 transition-colors">
             <div className="flex items-start justify-between">
               <div>
@@ -158,18 +205,23 @@ export default function Dashboard() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="section-title mb-0">Recent Investigations</h2>
-          <Link to="/history" className="text-xs text-cyber-400 hover:text-cyber-300 flex items-center gap-1">
+          <Link
+            to="/history"
+            className="text-xs text-cyber-400 hover:text-cyber-300 flex items-center gap-1"
+          >
             View all <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
 
         {loading ? (
-          <LoadingSpinner message="Loading history…" />
+          <LoadingSpinner message="Loading history..." />
         ) : history.length === 0 ? (
           <div className="card text-center py-12">
             <ShieldCheck className="w-10 h-10 text-dark-500 mx-auto mb-3" />
             <p className="text-gray-400 text-sm">No investigations yet.</p>
-            <p className="text-gray-500 text-xs mt-1">Run your first analysis using one of the modules above.</p>
+            <p className="text-gray-500 text-xs mt-1">
+              Run your first analysis using one of the modules above.
+            </p>
           </div>
         ) : (
           <div className="card overflow-hidden p-0">
@@ -183,8 +235,11 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {history.map((h, i) => (
-                  <tr key={h.id} className="border-b border-dark-800 last:border-0 hover:bg-dark-800/40 transition-colors">
+                {history.map((h) => (
+                  <tr
+                    key={h.id}
+                    className="border-b border-dark-800 last:border-0 hover:bg-dark-800/40 transition-colors"
+                  >
                     <td className="px-4 py-3">
                       <span className="text-xs font-mono bg-dark-800 border border-dark-600 px-2 py-0.5 rounded text-cyber-300 uppercase">
                         {h.type}
@@ -206,11 +261,14 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
       {/* Platform Upgrade Roadmap */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="section-title mb-0">Platform Upgrade Roadmap</h2>
-          <span className="text-[10px] font-mono text-dark-400 uppercase tracking-widest">UP Police Cyber Cell · Planned Enhancements</span>
+          <span className="text-[10px] font-mono text-dark-400 uppercase tracking-widest">
+            UP Police Cyber Cell · Planned Enhancements
+          </span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {ROADMAP.map(({ icon: Icon, label, status, color, border, bg, items }) => (
@@ -231,7 +289,7 @@ export default function Dashboard() {
                 )}
               </div>
               <ul className="space-y-1.5">
-                {items.map(item => (
+                {items.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-xs text-gray-400">
                     <span className={`mt-1 w-1 h-1 rounded-full shrink-0 ${color.replace('text-', 'bg-')}`} />
                     {item}
@@ -242,6 +300,7 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
     </div>
   )
 }
