@@ -15,6 +15,7 @@ import History from './pages/History'
 import IndianScamScanner from './pages/IndianScamScanner'
 import IPIntelligence from './pages/IPIntelligence'
 import SocialOSINT from './pages/SocialOSINT'
+import DomainIntelligence from './pages/DomainIntelligence'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -39,6 +40,7 @@ export default function App() {
               <Route path="/indian-scams"  element={<IndianScamScanner />} />
               <Route path="/ip-intel"      element={<IPIntelligence />} />
               <Route path="/social-osint"  element={<SocialOSINT />} />
+              <Route path="/domain-intel"  element={<DomainIntelligence />} />
             </Routes>
           </main>
         </div>

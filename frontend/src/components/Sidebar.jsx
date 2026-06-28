@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 import {
   LayoutDashboard, Mail, Globe2, Link2, FileSearch,
   ShieldCheck, Activity, Cpu, ChevronRight, Bug, Phone, Folder,
-  Flag, Globe, Users,
+  Flag, Globe, Users, Search, Network,
 } from 'lucide-react'
 
 const NAV_GROUPS = [
@@ -14,6 +14,7 @@ const NAV_GROUPS = [
       { to: '/email',     icon: Mail,            label: 'Email Forensics' },
       { to: '/homograph', icon: Globe2,          label: 'Homograph Detector' },
       { to: '/url',       icon: Link2,           label: 'URL Intelligence' },
+      { to: '/domain-intel', icon: Search,       label: 'Domain Intelligence', badge: 'NEW' },
       { to: '/fraud',     icon: FileSearch,      label: 'Fraud Detection' },
       { to: '/malware',   icon: Bug,             label: 'Malware Detection' },
     ],
@@ -21,16 +22,16 @@ const NAV_GROUPS = [
   {
     label: 'India OSINT',
     items: [
-      { to: '/phone',        icon: Phone,  label: 'Phone & UPI OSINT',    badge: 'NEW' },
-      { to: '/indian-scams', icon: Flag,   label: 'Indian Scam Scanner',  badge: 'NEW' },
-      { to: '/ip-intel',     icon: Globe,  label: 'IP Intelligence',       badge: 'NEW' },
-      { to: '/social-osint', icon: Users,  label: 'Social Media OSINT',    badge: 'NEW' },
+      { to: '/indian-scams', icon: Flag,    label: 'Indian Scam Scanner',  badge: 'v2' },
+      { to: '/phone',        icon: Phone,   label: 'Phone & UPI OSINT' },
+      { to: '/ip-intel',     icon: Globe,   label: 'IP Intelligence' },
+      { to: '/social-osint', icon: Users,   label: 'Social Media OSINT' },
     ],
   },
   {
     label: 'Case Management',
     items: [
-      { to: '/cases',   icon: Folder,      label: 'Cases & FIR Tracking', badge: 'NEW' },
+      { to: '/cases',   icon: Folder,      label: 'Cases & FIR Tracking' },
       { to: '/risk',    icon: ShieldCheck, label: 'Risk Assessment' },
       { to: '/history', icon: Activity,    label: 'History' },
     ],
@@ -56,7 +57,7 @@ export default function Sidebar({ open, setOpen }) {
           </div>
           <div>
             <div className="text-sm font-bold text-white tracking-wider font-mono">PHANTOM</div>
-            <div className="text-xs text-cyber-400 font-mono tracking-widest">TRACE v2</div>
+            <div className="text-xs text-cyber-400 font-mono tracking-widest">TRACE v2.1</div>
           </div>
         </div>
 
@@ -100,7 +101,8 @@ export default function Sidebar({ open, setOpen }) {
 
         {/* Footer */}
         <div className="px-5 py-3 border-t border-dark-700">
-          <p className="text-[10px] text-dark-400 font-mono">PhantomTrace v2.0 · UP Police OSINT</p>
+          <p className="text-[10px] text-dark-400 font-mono">PhantomTrace v2.1.0 · UP Police OSINT</p>
+          <p className="text-[9px] text-dark-600 font-mono mt-0.5">14 Modules · 12 Scam Categories</p>
         </div>
       </aside>
     </>

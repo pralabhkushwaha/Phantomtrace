@@ -1,4 +1,4 @@
-"""PhantomTrace — FastAPI main application entry point."""
+"""PhantomTrace v2 — FastAPI main application."""
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,11 +11,13 @@ from .routers.case_routes import router as case_router
 from .routers.osint_routes import router as osint_router
 from .routers.ip_intel_routes import router as ip_router
 from .routers.social_osint_routes import router as social_router
+from .routers.indian_scam_routes import router as indian_scam_router
+from .routers.domain_routes import router as domain_router
 
 app = FastAPI(
     title="PhantomTrace",
-    description="Professional Phishing Detection, Email Forensics & Fraud Intelligence Platform",
-    version="2.0.0",
+    description="Professional Phishing Detection, Email Forensics & Fraud Intelligence Platform — UP Police Cyber Cell",
+    version="2.1.0",
 )
 
 app.add_middleware(
@@ -40,22 +42,24 @@ app.include_router(case_router)
 app.include_router(osint_router)
 app.include_router(ip_router)
 app.include_router(social_router)
+app.include_router(indian_scam_router)
+app.include_router(domain_router)
 
 @app.get("/")
 def root():
     return {
         "app": "PhantomTrace",
-        "version": "2.0.0",
+        "version": "2.1.0",
         "status": "operational",
         "docs": "/docs",
         "modules": [
             "email_forensics", "homograph_detection", "url_intelligence",
             "content_fraud_detection", "malware_detection", "case_management",
             "phone_upi_osint", "indian_scam_scanner", "ip_intelligence",
-            "social_osint"
-        ]
+            "social_osint", "domain_intelligence",
+        ],
     }
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "version": "2.1.0"}

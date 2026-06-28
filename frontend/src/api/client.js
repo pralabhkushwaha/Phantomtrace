@@ -158,3 +158,17 @@ export async function analyzeIndianScam(text, subject = '') {
   const { data } = await api.post('/api/content/analyze', { text, subject })
   return data
 }
+
+// ── Indian Scam Scanner (dedicated endpoint) ──────────────────────────────
+
+export async function analyzeIndianScamV2(text, subject = '') {
+  const { data } = await api.post('/api/indian-scam/analyze', { text, subject })
+  return data
+}
+
+// ── Domain Intelligence ───────────────────────────────────────────────────
+
+export async function analyzeDomainIntel(domain) {
+  const { data } = await api.post('/api/domain/analyze', { domain })
+  return data
+}
